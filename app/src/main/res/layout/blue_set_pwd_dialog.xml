@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:orientation="vertical">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_400px_in720p"
+        android:layout_marginLeft="@dimen/_60px_in720p"
+        android:layout_marginRight="@dimen/_60px_in720p"
+        android:background="@drawable/blue_prompt_dialog_bg"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:background="@color/color5"
+            android:gravity="center"
+            android:text="@string/blue_set_pwd_dialog_title"
+            android:textColor="@color/white"
+            android:textSize="@dimen/_30px_in720p" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="2">
+
+            <EditText
+                android:id="@+id/password"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_80px_in720p"
+                android:layout_gravity="center"
+                android:layout_marginLeft="@dimen/_20px_in720p"
+                android:layout_marginRight="@dimen/_20px_in720p"
+                android:background="@drawable/blue_set_pwd_dialog_et_bg"
+                android:fontFamily="sans-serif"
+                android:freezesText="true"
+                android:gravity="center"
+                android:hint="@string/blue_set_pwd_dialog_hint"
+                android:inputType="textPassword"
+                android:maxLines="1"
+                android:scrollHorizontally="true"
+                android:singleLine="true"
+                android:textCursorDrawable="@null"
+                android:textSize="15sp"
+                android:textStyle="normal" />
+
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/sure"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:background="@color/pop_txt_bg"
+            android:gravity="center"
+            android:text="OK"
+            android:textColor="@drawable/blue_set_pwd_dialog_color_bg"
+            android:textSize="@dimen/_30px_in720p" />
+
+    </LinearLayout>
+
+</LinearLayout>
