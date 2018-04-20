@@ -155,7 +155,7 @@ public class QRActivity extends BaseActivity implements Callback, View.OnClickLi
             Toast.makeText(context, "Scan failed!", Toast.LENGTH_SHORT).show();
             ((Activity) context).finish();
         } else if (type == 0){
-            if (resultString.contains(RequestCode.QR_DEVICE_ROOT)){
+            if (resultString.startsWith(RequestCode.QR_DEVICE_ROOT)){
                 Intent resultIntent = new Intent();
                 Bundle bundle = new Bundle();
                 bundle.putString(RESULT, resultString);

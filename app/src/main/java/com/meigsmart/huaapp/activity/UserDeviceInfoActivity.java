@@ -70,7 +70,7 @@ public class UserDeviceInfoActivity extends BaseActivity implements View.OnClick
     private DeviceInfoModel mInfoModel;//信息结果
     @BindView(R.id.deviceNumber)
     public TextView mDeviceNum;
-    @BindViews({R.id.trackLayout,R.id.eventLayout,R.id.setLayout})
+    @BindViews({R.id.eventLayout,R.id.setLayout})
     public List<LinearLayout> mLayoutList;//布局集合
     private static final int REQUEST_SUCCESS = 0x001;
     private static final int REQUEST_FAILURE = 0x002;
@@ -82,6 +82,10 @@ public class UserDeviceInfoActivity extends BaseActivity implements View.OnClick
     private String mPassword = "";
     private int mTypeBind = 3;//0 prompt ; 1 setpwd ; 2 come settings ; 3 default
     private String serialId = "";
+    @BindView(R.id.google)
+    public LinearLayout mGoogle;
+    @BindView(R.id.baidu)
+    public LinearLayout mBaidu;
 
     @Override
     protected int getLayoutId() {
@@ -96,7 +100,8 @@ public class UserDeviceInfoActivity extends BaseActivity implements View.OnClick
         mRightLayout.setOnClickListener(this);
         mLayoutList.get(0).setOnClickListener(this);
         mLayoutList.get(1).setOnClickListener(this);
-        mLayoutList.get(2).setOnClickListener(this);
+        mGoogle.setOnClickListener(this);
+        mBaidu.setOnClickListener(this);
         mRightName.setText(R.string.user_info_binding);
 
         mDialog = new SimpleArcDialog(this, R.style.MyDialogStyle);
@@ -107,7 +112,6 @@ public class UserDeviceInfoActivity extends BaseActivity implements View.OnClick
 
         mBlueService = new BluetoothService();
         mBlueService.setmListener(this);
-        mDialog.show();
 
         mDialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
             @Override
@@ -193,6 +197,11 @@ public class UserDeviceInfoActivity extends BaseActivity implements View.OnClick
                         if (model.getResult()== 200 ){
                             mTypeBind = 2;
                             mDialog.dismiss();
+
+                            Intent intent = new Intent(mContext,SystemSetActivity.class);
+                            intent.putExtra("serial_number",mInfoModel.getData().getSerialNumber());
+                            startActivity(intent);
+
                         } else if (model.getResult()== 400 ){//no set password
                             mTypeBind = 1;
                             BlueSetPwdDialog dialog = new BlueSetPwdDialog(mContext,R.style.MyDialogStyle);
@@ -253,6 +262,7 @@ public class UserDeviceInfoActivity extends BaseActivity implements View.OnClick
         HttpManager.getApiService().getDeviceInfoBySerial(serial_number)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
+                .compose(new DialogTransformer(this, getResources().getString(R.string.loading_title)).<DeviceInfoModel>transformer())
                 .subscribe(new BaseObserver<DeviceInfoModel>() {
 
                     @Override
@@ -276,7 +286,7 @@ public class UserDeviceInfoActivity extends BaseActivity implements View.OnClick
                             msg = RequestCode.QR_DEVICE_HEADER + (model.getData() != null ? model.getData().getSerialNumber() : getResources().getString(R.string.user_info_no_result));
                             mDeviceNum.setText("SN: "+model.getData().getSerialNumber());
 
-                            mHandler.sendEmptyMessage(REQUEST_SUCCESS);
+//                            mHandler.sendEmptyMessage(REQUEST_SUCCESS);
                         } else {
                             msg = model.getReason();
                             ToastUtil.showBottomShort(model.getReason());
@@ -329,15 +339,8 @@ public class UserDeviceInfoActivity extends BaseActivity implements View.OnClick
         if (view == mRightLayout) {// 绑定
             bindDevice(deviceSerial);
         }
-        if (view == mLayoutList.get(0)){//轨迹
-            if (mInfoModel==null){
-                return;
-            }
-            Intent intent = new Intent(mContext,MapsActivity.class);
-            intent.putExtra("uuid",mInfoModel.getData().getUuid());
-            startActivity(intent);
-        }
-        if (view == mLayoutList.get(1)){//事件
+
+        if (view == mLayoutList.get(0)){//事件
             if (mInfoModel==null){
                 return;
             }
@@ -345,7 +348,7 @@ public class UserDeviceInfoActivity extends BaseActivity implements View.OnClick
             intent.putExtra("uuid",mInfoModel.getData().getUuid());
             startActivity(intent);
         }
-        if (view == mLayoutList.get(2)){//
+        if (view == mLayoutList.get(1)){//
             if (mInfoModel==null){
                 return;
             }
@@ -369,6 +372,22 @@ public class UserDeviceInfoActivity extends BaseActivity implements View.OnClick
                 if (!mDialog.isShowing())mDialog.show();
                 mHandler.sendEmptyMessage(REQUEST_SUCCESS);
             }
+        }
+        if (view == mGoogle){
+            if (mInfoModel==null){
+                return;
+            }
+            Intent intent = new Intent(mContext,GoogleMapsActivity.class);
+            intent.putExtra("uuid",mInfoModel.getData().getUuid());
+            startActivity(intent);
+        }
+        if (view == mBaidu){
+            if (mInfoModel==null){
+                return;
+            }
+            Intent intent = new Intent(mContext,BaiduMapActivity.class);
+            intent.putExtra("uuid",mInfoModel.getData().getUuid());
+            startActivity(intent);
         }
     }
 

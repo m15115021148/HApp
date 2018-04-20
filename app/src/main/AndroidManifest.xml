@@ -61,9 +61,9 @@
     <application
         android:name=".application.MyApplication"
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@drawable/app_log_hua"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:roundIcon="@drawable/app_log_hua"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <meta-data
@@ -82,10 +82,8 @@
 
         <activity
             android:name=".activity.MainActivity"
-            android:launchMode="singleTask">
-
-        </activity>
-        <activity android:name=".activity.SplashActivity" >
+            android:launchMode="singleTask" />
+        <activity android:name=".activity.SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -106,7 +104,9 @@
         <activity android:name=".activity.BlueSetPswActivity" />
         <activity android:name=".activity.BlueSetThresholdsActivity" />
         <activity android:name=".activity.BlueUpgradeFirmwareActivity" />
-
+        <activity android:name=".activity.GoogleMapsActivity" />
+        <activity android:name=".activity.BaiduMapActivity"/>
+        <activity android:name=".activity.SystemMessageActivity"/>
     </application>
 
 </manifest>

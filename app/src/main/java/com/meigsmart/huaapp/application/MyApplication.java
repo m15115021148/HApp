@@ -20,6 +20,7 @@ import com.meigsmart.huaapp.db.BluetoothDao;
 import com.meigsmart.huaapp.log.CrashHandler;
 import com.meigsmart.huaapp.log.LogUtil;
 import com.meigsmart.huaapp.model.ClientsModel;
+import com.meigsmart.huaapp.util.MapLocationUtil;
 
 import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
@@ -36,12 +37,14 @@ public class MyApplication extends Application {
     public BluetoothDao mBlueDb;//数据库
     public static int screenWidth = 0;//屏幕宽
     public static int screenHeight = 0;//屏幕高
+    public MapLocationUtil mapLocationUtil;//百度定位
 
     @Override
     public void onCreate() {
         super.onCreate();
         mBlueDb = new BluetoothDao(this);
         SDKInitializer.initialize(getApplicationContext());
+        mapLocationUtil = new MapLocationUtil(getApplicationContext());
         CrashHandler.getInstance().init(this);
     }
 

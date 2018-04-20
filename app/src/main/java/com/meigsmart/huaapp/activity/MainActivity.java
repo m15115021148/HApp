@@ -14,14 +14,15 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
+import com.baidu.location.BDLocation;
+import com.baidu.location.BDLocationListener;
 import com.meigsmart.huaapp.R;
 import com.meigsmart.huaapp.adapter.DeviceListAdapter;
 import com.meigsmart.huaapp.application.MyApplication;
 import com.meigsmart.huaapp.db.BluetoothBean;
-import com.meigsmart.huaapp.log.LogUtil;
 import com.meigsmart.huaapp.scan.QRActivity;
+import com.meigsmart.huaapp.util.MapLocationUtil;
 import com.meigsmart.huaapp.util.ToastUtil;
 
 import java.util.List;
@@ -40,6 +41,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener,D
     public ListView mLv;
     private DeviceListAdapter mAdapter;
     private long exitTime = 0;//退出的时间
+    private MapLocationUtil mapLocationUtil;//百度定位
 
     @Override
     protected int getLayoutId() {
@@ -56,6 +58,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener,D
         mLv.setAdapter(mAdapter);
         mDeviceList.setVisibility(View.GONE);
         mHandler.sendEmptyMessage(1001);
+        locationPoint();
     }
 
     @SuppressLint("HandlerLeak")
@@ -90,7 +93,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener,D
             startActivityForResult(intent,111);
         }
         if (view == mMsgLayout){
-
+            Intent system = new Intent(mContext, SystemMessageActivity.class);
+            startActivity(system);
         }
     }
 
@@ -189,5 +193,43 @@ public class MainActivity extends BaseActivity implements View.OnClickListener,D
         }
         return super.onKeyDown(keyCode, event);
     }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        mapLocationUtil.unregisterListener(mBDListener); //注销掉监听
+        mapLocationUtil.stop(); //停止定位服务
+    }
+
+    /**
+     * 开启定位
+     */
+    private void locationPoint() {
+        // -----------location config ------------
+        mapLocationUtil = ((MyApplication) getApplication()).mapLocationUtil;
+        mapLocationUtil.registerListener(mBDListener);
+        //注册监听
+        int type = getIntent().getIntExtra("from", 0);
+        if (type == 0) {
+            mapLocationUtil.setLocationOption(mapLocationUtil.getDefaultLocationClientOption());
+        } else if (type == 1) {
+            mapLocationUtil.setLocationOption(mapLocationUtil.getOption());
+        }
+        mapLocationUtil.start();// 定位SDK
+    }
+
+    /**
+     * 定位结果回调，重写onReceiveLocation方法，可以直接拷贝如下代码到自己工程中修改
+     */
+    private BDLocationListener mBDListener = new BDLocationListener() {
+
+        @Override
+        public void onReceiveLocation(BDLocation location) {
+            if (null != location && location.getLocType() != BDLocation.TypeServerError) {
+                MyApplication.lat = location.getLatitude();
+                MyApplication.lng = location.getLongitude();
+            }
+        }
+    };
 
 }

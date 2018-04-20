@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">HuaApp</string>
+    <string name="app_name">Track</string>
     <string name="title_activity_maps">Map</string>
 
     <string name="scan_text">Insert qr code into the box and scan automatically</string>

@@ -53,7 +53,7 @@ public final class ViewfinderView extends View {
 	/**
 	 * 字体大小
 	 */
-	private static final int TEXT_SIZE = 16;
+	private static final int TEXT_SIZE = 12;
 	/**
 	 * 字体距离扫描框下面的距离
 	 */
