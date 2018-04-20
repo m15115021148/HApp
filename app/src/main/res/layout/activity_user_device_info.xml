@@ -39,10 +39,11 @@
                 android:layout_alignTop="@+id/card_qr"
                 android:layout_marginTop="@dimen/_10px_in720p"
                 android:layout_toRightOf="@+id/card_qr"
-                android:background="@drawable/qr_1" />
+                android:background="@drawable/app_09" />
 
 
             <TextView
+                android:gravity="center"
                 android:id="@+id/deviceNumber"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -52,7 +53,7 @@
                 android:ellipsize="end"
                 android:maxLines="1"
                 android:textColor="@color/white"
-                android:textSize="@dimen/_26px_in720p"
+                android:textSize="@dimen/_28px_in720p"
                 android:textStyle="bold" />
 
             <ImageView
