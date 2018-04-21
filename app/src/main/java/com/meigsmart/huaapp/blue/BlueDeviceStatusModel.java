@@ -19,7 +19,7 @@ public class BlueDeviceStatusModel extends BluBaseModel {
 
         private GeneralModel General;
         private CallsModel Calls;
-        private ValNetworkModel val_Network;
+        private NetworkModel Network;
         private GPSModel GPS;
         private BatteryModel Battery;
         private GroupModel Group;
@@ -28,24 +28,24 @@ public class BlueDeviceStatusModel extends BluBaseModel {
             return General;
         }
 
-        public void setGeneral(GeneralModel General) {
-            this.General = General;
+        public void setGeneral(GeneralModel general) {
+            General = general;
         }
 
         public CallsModel getCalls() {
             return Calls;
         }
 
-        public void setCalls(CallsModel Calls) {
-            this.Calls = Calls;
+        public void setCalls(CallsModel calls) {
+            Calls = calls;
         }
 
-        public ValNetworkModel getVal_Network() {
-            return val_Network;
+        public NetworkModel getNetwork() {
+            return Network;
         }
 
-        public void setVal_Network(ValNetworkModel val_Network) {
-            this.val_Network = val_Network;
+        public void setNetwork(NetworkModel network) {
+            Network = network;
         }
 
         public GPSModel getGPS() {
@@ -60,16 +60,16 @@ public class BlueDeviceStatusModel extends BluBaseModel {
             return Battery;
         }
 
-        public void setBattery(BatteryModel Battery) {
-            this.Battery = Battery;
+        public void setBattery(BatteryModel battery) {
+            Battery = battery;
         }
 
         public GroupModel getGroup() {
             return Group;
         }
 
-        public void setGroup(GroupModel Group) {
-            this.Group = Group;
+        public void setGroup(GroupModel group) {
+            Group = group;
         }
 
         public static class GeneralModel {
@@ -126,7 +126,7 @@ public class BlueDeviceStatusModel extends BluBaseModel {
             }
         }
 
-        public static class ValNetworkModel {
+        public static class NetworkModel {
 
             private String sim_card_status;
             private int signal_level;

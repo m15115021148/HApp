@@ -116,7 +116,7 @@ public class SplashActivity extends BaseActivity implements Runnable {
                             MyApplication.clientsModel = PreferencesUtil.getDataModel(mContext,"clientsModel");
                             Intent intent = new Intent(mContext,MainActivity.class);
                             startActivity(intent);
-                            finish();
+                            mContext.finish();
                         }else{
                             ToastUtil.showBottomShort(getResources().getString(R.string.login_fail));
                         }

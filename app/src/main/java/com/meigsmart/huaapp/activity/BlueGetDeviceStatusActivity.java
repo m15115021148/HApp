@@ -126,6 +126,8 @@ public class BlueGetDeviceStatusActivity extends BaseActivity implements View.On
                 case 1002:
                     mDialog.dismiss();
                     BlueDeviceStatusModel model = JSON.parseObject(msg.obj.toString(),BlueDeviceStatusModel.class);
+                    LogUtil.w(JSON.toJSONString(model));
+
                     if (model.getMethod().equals(RequestCode.BLUE_GET_DEVICE_STATUS)){
                         if (model.getResult()==200){
                             mLayout.setVisibility(View.VISIBLE);
@@ -139,12 +141,12 @@ public class BlueGetDeviceStatusActivity extends BaseActivity implements View.On
                             mListCalls.get(0).setText(Html.fromHtml(getResources().getString(R.string.blue_device_status_reg_status) +"&nbsp;"+model.getStatus().getCalls().getReg_status()));
                             mListCalls.get(1).setText(Html.fromHtml(getResources().getString(R.string.blue_device_status_call_status) +"&nbsp;"+model.getStatus().getCalls().getCall_status()));
 
-                            mListNetwork.get(0).setText(Html.fromHtml(getResources().getString(R.string.blue_device_status_sim_card_status) +"&nbsp;"+model.getStatus().getVal_Network().getSim_card_status()));
-                            mListNetwork.get(1).setText(Html.fromHtml(getResources().getString(R.string.blue_device_status_network_signal_level) +"&nbsp;"+model.getStatus().getVal_Network().getSignal_level()));
-                            mListNetwork.get(2).setText(Html.fromHtml(getResources().getString(R.string.blue_device_status_ipv4_status) +"&nbsp;"+model.getStatus().getVal_Network().getIpv4_status()));
-                            mListNetwork.get(3).setText(Html.fromHtml(getResources().getString(R.string.blue_device_status_ipv6_status) +"&nbsp;"+model.getStatus().getVal_Network().getIpv6_status()));
-                            mListNetwork.get(4).setText(Html.fromHtml(getResources().getString(R.string.blue_device_status_mcc) +"&nbsp;"+model.getStatus().getVal_Network().getMcc()));
-                            mListNetwork.get(5).setText(Html.fromHtml(getResources().getString(R.string.blue_device_status_mnc) +"&nbsp;"+model.getStatus().getVal_Network().getMnc()));
+                            mListNetwork.get(0).setText(Html.fromHtml(getResources().getString(R.string.blue_device_status_sim_card_status) +"&nbsp;"+(model.getStatus().getNetwork()==null?"":model.getStatus().getNetwork().getSim_card_status())));
+                            mListNetwork.get(1).setText(Html.fromHtml(getResources().getString(R.string.blue_device_status_network_signal_level) +"&nbsp;"+(model.getStatus().getNetwork()==null?"":model.getStatus().getNetwork().getSignal_level())));
+                            mListNetwork.get(2).setText(Html.fromHtml(getResources().getString(R.string.blue_device_status_ipv4_status) +"&nbsp;"+(model.getStatus().getNetwork()==null?"":model.getStatus().getNetwork().getIpv4_status())));
+                            mListNetwork.get(3).setText(Html.fromHtml(getResources().getString(R.string.blue_device_status_ipv6_status) +"&nbsp;"+(model.getStatus().getNetwork()==null?"":model.getStatus().getNetwork().getIpv6_status())));
+                            mListNetwork.get(4).setText(Html.fromHtml(getResources().getString(R.string.blue_device_status_mcc) +"&nbsp;"+(model.getStatus().getNetwork()==null?"":model.getStatus().getNetwork().getMcc())));
+                            mListNetwork.get(5).setText(Html.fromHtml(getResources().getString(R.string.blue_device_status_mnc) +"&nbsp;"+(model.getStatus().getNetwork()==null?"":model.getStatus().getNetwork().getMnc())));
 
                             mListGps.get(0).setText(Html.fromHtml(getResources().getString(R.string.blue_device_status_gps_status) +"&nbsp;"+model.getStatus().getGPS().getStatus()));
                             mListGps.get(1).setText(Html.fromHtml(getResources().getString(R.string.blue_device_status_gps_signal_level) +"&nbsp;"+model.getStatus().getGPS().getSignal_level()));

@@ -109,6 +109,7 @@ public class GoogleMapsActivity extends BaseActivity implements View.OnClickList
     @Override
     public void onDestroy() {
         super.onDestroy();
+        mMap.clear();
         if (mHandler!=null){
             mHandler.removeMessages(SEND_TRACK);
         }
@@ -266,15 +267,18 @@ public class GoogleMapsActivity extends BaseActivity implements View.OnClickList
                                         );
 
                                     } else {
+                                        mMap.clear();
                                         ToastUtil.showBottomShort(getResources().getString(R.string.main_no_track));
                                     }
 
                                 }
                             } else {
+                                mMap.clear();
                                 ToastUtil.showBottomShort(getResources().getString(R.string.main_no_track));
                             }
 
                         }else{
+                            mMap.clear();
                             ToastUtil.showBottomShort(model.getReason());
                         }
                     }
